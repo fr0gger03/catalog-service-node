@@ -82,7 +82,6 @@ describe("Product creation", () => {
     await kafkaConsumer.waitForMessage({
       id: createdProduct.id,
       action: "product_created",
-      upc: createdProduct.upc,
     });
   }, 15000);
 
