@@ -5,7 +5,7 @@
 # By using this stage, it provides a consistent base for both
 # the dev and prod versions of the image.
 ###########################################################
-FROM node:18 AS base
+FROM node:22-slim AS base
 
 # Setup a non-root user to run the app
 WORKDIR /usr/local/app
@@ -23,9 +23,9 @@ COPY --chown=appuser:appuser package.json package-lock.json ./
 # and automatically restart the app.
 ###########################################################
 FROM base AS dev
-ENV NODE_ENV development
+ENV NODE_ENV=development
 RUN npm install
-CMD ["npm", "run", "dev-container"]
+CMD ["yarn", "dev-container"]
 
 
 ###########################################################
@@ -35,10 +35,10 @@ CMD ["npm", "run", "dev-container"]
 # installs only the production dependencies.
 ###########################################################
 FROM base AS final
-ENV NODE_ENV production
+ENV NODE_ENV=production
 RUN npm ci --production --ignore-scripts && npm cache clean --force
 COPY ./src ./src
 
 EXPOSE 3000
 
-CMD node src/index.js
+CMD [ "node", "src/index.js" ]
