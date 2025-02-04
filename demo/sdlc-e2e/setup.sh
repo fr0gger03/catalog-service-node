@@ -30,9 +30,9 @@ docker compose pull
 echo "==> Deleting postgres:17.2 container image"
 docker image rm postgres:17.2 || true
 
-echo "==> Configuring DBC (if this fails, ask to be added to the dockerdevrel organization)"
-docker buildx create --driver cloud dockerdevrel/demo-builder 2>/dev/null || true
-docker buildx use cloud-dockerdevrel-demo-builder
+echo "==> Configuring DBC (if this fails, ask to be added to the demonstrationorg organization)"
+docker buildx create --driver cloud demonstrationorg/default 2>/dev/null || true
+docker buildx use cloud-demonstrationorg-default
 
 echo "==> Configuring Scout
-docker scout config organization dockerdevrel
+docker scout config organization demonstrationorg
